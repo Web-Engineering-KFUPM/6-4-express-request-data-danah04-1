@@ -131,7 +131,15 @@ app.get("/profile/:first/:last", (req,res)=>{
 
 
 // Route param middleware example: /users/42
-
+app.param("userId", (req,res,next,userId)=>{
+   const userIdNum = Number(userId);
+   if(isNaN(userIdNum) || userIdNum <= 0){
+      res.status(400).json({ ok:false, error:"userId must be positive number" });
+   } else {
+      req.userIdNum = userIdNum;
+      next();
+   }
+});
 
 // Route params: /users/:userId route
 
